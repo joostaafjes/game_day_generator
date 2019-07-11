@@ -30,12 +30,12 @@ def check_team_combination_already_exists(rounds, combination):
 def find_next_round(round_id, rounds):
    if round_id == no_of_rounds:
       return rounds
-   # combinations = list(itertools.permutations(range(no_of_teams - 2)))
-   combinations = list(itertools.permutations(range(no_of_teams)))
+   combinations = list(itertools.permutations(range(no_of_teams - 2)))
+   # combinations = list(itertools.permutations(range(no_of_teams)))
    for combination_tuple in combinations:
       combination = list(combination_tuple)
-      # combination.insert(round_id * 2, no_of_teams - 1)
-      # combination.insert(round_id * 2, no_of_teams - 2)
+      combination.insert(round_id * 2, no_of_teams - 1)
+      combination.insert(round_id * 2, no_of_teams - 2)
       # first round
       if len(rounds) == 0:
          print('ronde {}: {}'.format(round_id, rounds + [combination]))
@@ -53,7 +53,7 @@ def find_next_round(round_id, rounds):
 
    return None
 
-no_of_rounds = 5
+no_of_rounds = 6
 # no_of_teams = no_of_rounds * 2 - 2
 no_of_teams = no_of_rounds * 2
 
@@ -70,7 +70,25 @@ print('----------------------')
 print('final solution')
 print('----------------------')
 if rounds:
+    # heading
+    print('                 spellen')
+    print('         ', end='')
+    for idx in range(no_of_rounds):
+        print(' {}  '.format(idx + 1), end='')
+    print('')
+    print('--------', end='')
+    for idx in range(no_of_rounds):
+        print('----', end='')
+    print('')
+
+    # schedule
     for round_id, round in enumerate(rounds):
-       print('ronde {}: {}'.format(round_id, round))
+        print("ronde {}: ".format(round_id), end = '')
+        for team in round:
+            char = team if team < no_of_teams - 2 else '-'
+            next_char = ' ' if team % 2 == 1 else '-'
+            print('{}{}'.format(char, next_char), end='')
+        print('')
+
 else:
    print('no solution found')
